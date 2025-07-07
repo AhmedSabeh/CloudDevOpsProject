@@ -1,0 +1,22 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-deployment
+  namespace: ivolve
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: cloudapp
+  template:
+    metadata:
+      labels:
+        app: cloudapp
+    spec:
+      containers:
+      - name: cloudapp
+        image: ahmedsabeh/clouddevops-app:latest
+        ports:
+        - containerPort: 8085
+
