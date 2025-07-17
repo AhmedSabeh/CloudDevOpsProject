@@ -32,12 +32,36 @@ resource "aws_route_table_association" "a" {
 }
 
 resource "aws_security_group" "sg" {
-  name   = "allow_ssh"
+  name   = "allow_ssh_jenkins_sonarqube"
   vpc_id = aws_vpc.main.id
 
   ingress {
     from_port   = 22
     to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # Jenkins HTTP (existing rule)
+  ingress {
+    from_port   = 8080
+    to_port     = 8080
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # SonarQube HTTP
+  ingress {
+    from_port   = 9000   
+    to_port     = 9000
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  # HTTPS 
+  ingress {
+    from_port   = 443
+    to_port     = 443
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
